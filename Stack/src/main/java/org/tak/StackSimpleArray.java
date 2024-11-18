@@ -1,17 +1,18 @@
 package org.tak;
 
-public class StackSimpleArray {
-    private int[] stack;
+public class StackSimpleArray<T> implements StackADT<T> {
+    private T[] stack;
     private int top;
     private int size;
 
     public StackSimpleArray(int size) {
         this.size = size;
-        this.stack = new int[size];
+        this.stack = (T[]) new Object[size];
         this.top = -1;
     }
 
-    public void push(int value) {
+    @Override
+    public void push(T value) {
         if (top == size - 1) {
             System.out.println("Stack is full");
         } else {
@@ -19,29 +20,34 @@ public class StackSimpleArray {
         }
     }
 
-    public int pop() {
+    @Override
+    public T pop() {
         if (top == -1) {
             System.out.println("Stack is empty");
-            return -1;
+            return null;
         } else {
             return stack[top--];
         }
     }
 
-    public int peek() {
+    @Override
+    public T peek() {
         if (top == -1) {
             System.out.println("Stack is empty");
-            return -1;
+            return null;
         } else {
             return stack[top];
         }
     }
 
+    @Override
     public boolean isEmpty() {
         return top == -1;
     }
 
+    @Override
     public boolean isFull() {
         return top == size - 1;
     }
+
 }

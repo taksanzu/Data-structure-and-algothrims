@@ -1,7 +1,7 @@
 package org.tak;
 
-public class StackLinkedList {
-    private Node top;
+public class StackLinkedList<T> implements StackADT<T> {
+    private Node<T> top;
     private int size;
 
     public StackLinkedList() {
@@ -9,49 +9,54 @@ public class StackLinkedList {
         this.size = 0;
     }
 
-    public void push(int value) {
-        Node newNode = new Node(value);
-        newNode.next = top;
-        top = newNode;
+    private static class Node<T> {
+        private T value;
+        private Node<T> next;
+
+        public Node(T value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
+
+    @Override
+    public void push(T value) {
+        Node<T> node = new Node<>(value);
+        node.next = top;
+        top = node;
         size++;
     }
 
-    public int pop() {
+    @Override
+    public T pop() {
         if (top == null) {
             System.out.println("Stack is empty");
-            return -1;
+            return null;
         } else {
-            int value = top.value;
+            T value = top.value;
             top = top.next;
             size--;
             return value;
         }
     }
 
-    public int peek() {
+    @Override
+    public T peek() {
         if (top == null) {
             System.out.println("Stack is empty");
-            return -1;
+            return null;
         } else {
             return top.value;
         }
     }
 
+    @Override
     public boolean isEmpty() {
         return top == null;
     }
 
+    @Override
     public boolean isFull() {
         return false;
-    }
-
-    private class Node {
-        private int value;
-        private Node next;
-
-        public Node(int value) {
-            this.value = value;
-            this.next = null;
-        }
     }
 }

@@ -1,50 +1,51 @@
 package org.tak;
 
-public class StackDynamicArray {
-    private int[] stack;
+public class StackDynamicArray<T> implements StackADT<T> {
+    private T[] stack;
     private int top;
     private int size;
 
     public StackDynamicArray(int size) {
         this.size = size;
-        this.stack = new int[size];
+        this.stack = (T[]) new Object[size];
         this.top = -1;
     }
 
-    public void push(int value) {
+    @Override
+    public void push(T value) {
         if (top == size - 1) {
-            int[] newStack = new int[size * 2];
-            for (int i = 0; i < size; i++) {
-                newStack[i] = stack[i];
-            }
-            stack = newStack;
-            size *= 2;
+            System.out.println("Stack is full");
+        } else {
+            stack[++top] = value;
         }
-        stack[++top] = value;
     }
 
-    public int pop() {
+    @Override
+    public T pop() {
         if (top == -1) {
             System.out.println("Stack is empty");
-            return -1;
+            return null;
         } else {
             return stack[top--];
         }
     }
 
-    public int peek() {
+    @Override
+    public T peek() {
         if (top == -1) {
             System.out.println("Stack is empty");
-            return -1;
+            return null;
         } else {
             return stack[top];
         }
     }
 
+    @Override
     public boolean isEmpty() {
         return top == -1;
     }
 
+    @Override
     public boolean isFull() {
         return top == size - 1;
     }
